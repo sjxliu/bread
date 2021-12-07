@@ -1,17 +1,21 @@
 const express = require("express")
 const breads = express.Router()
-const breadType = require("../models/bread")
+const Bread = require("../models/bread")
 
 breads.get("/", (req, res)=>{
     //res.send(breadType)
     res.render("Index",{
         breads: Bread,
-        title: "Index Page"
+       
     });
 });
 
-breads.get("/:arrayIndex", (req, res)=>{
-    res.send(breadType[req.params.arrayIndex]);
-})
-
-module.exports = breads;
+breads.get('/:arrayIndex', (req, res) => {
+    //    res.send([req.params.arrayIndex])
+    //the curly brace allow you to pass in data below bread = object
+        res.render("Show", {
+            bread: Bread[req.params.arrayIndex]
+        })
+    })
+    
+    module.exports = breads

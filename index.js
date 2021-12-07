@@ -1,22 +1,26 @@
-const express = require("express")
-const breadControl = require("./controllers/breads_control");
-require("dotenv").config()
-const PORT= process.env.PORT;
-console.log(PORT)
+// DEPENDENCIES
+const express = require('express')
 
-const app= express()
+//CONFIGURATION
+require('dotenv').config()
+const PORT = process.env.PORT
+const app = express()
 
-//MIDDLEWARE
-app.set("views", __dirname + "views");
-app.set("view engine", "jsx")
-app.engine("jsx", require("express-react-views").createEngine())
+// MIDDLEWARE
+app.use(express.static('public'));
+app.set('views', __dirname + '/views');
+app.set('view engine', 'jsx')
+app.engine('jsx', require('express-react-views').createEngine())
 
-app.get("/", (req, res) =>{
-    res.send("Welcome to Bread")
+//ROUTES
+app.get('/', (req, res) => {
+    res.send("Welcome Bread!")
 })
 
-app.use("/breads",breadControl);
+const breadsController = require('./controllers/breads_control.js')
+app.use('/breads', breadsController)
 
-app.listen(PORT, ()=>{
-    console.log(`1\n***Listening on port:${PORT}***\n`)
-});
+//LISTEN
+app.listen(PORT, () => {
+    console.log('nomming at port', PORT);
+})
