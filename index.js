@@ -17,6 +17,10 @@ app.get('/', (req, res) => {
     res.send("Welcome Bread!")
 })
 
+app.get("*", (req,res)=>{
+    res.send("404");
+})
+
 const breadsController = require('./controllers/breads_control.js')
 app.use('/breads', breadsController)
 

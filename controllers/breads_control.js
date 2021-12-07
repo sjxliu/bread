@@ -13,9 +13,15 @@ breads.get("/", (req, res)=>{
 breads.get('/:arrayIndex', (req, res) => {
     //    res.send([req.params.arrayIndex])
     //the curly brace allow you to pass in data below bread = object
+    if(Bread[req.params.arrayIndex]) {
         res.render("Show", {
             bread: Bread[req.params.arrayIndex]
         })
+    } else {
+        res.send("404")
+    }
+    
+    
     })
     
     module.exports = breads
