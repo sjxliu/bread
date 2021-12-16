@@ -2,6 +2,7 @@ const express = require("express");
 const { flat } = require("../models/bread");
 const breads = express.Router()
 const Bread = require("../models/bread")
+const breadSeedData = require("../models/seed")
 
 
 breads.get("/", (req, res)=>{
@@ -36,14 +37,28 @@ breads.get("/new", (req,res) => {
 
 
     //edit put on top of show
-breads.get("/:arrayIndex/edit", (req,res)=>{
-    res.render("edit", {
-        bread: Bread[req.params.arrayIndex],
-        index: req.params.arrayIndex
+breads.get("/:id/edit", (req,res) => {
+    Bread.findById(req.params.id)
+    .then(foundBread =>{
+        res.render("edit", {
+            bread: foundBread
+        })
     })
 })
+
+// edit?
+// breads.get('/:arrayIndex/edit', (req, res)=> {
+//     breadType.findById(req.params.arrayIndex).then(bread => {
+//         res.render('Edit', {bread: bread, 
+//             index: req.params.arrayIndex})
+//     })
+//     .catch(err => {
+//         res.status(404).render('Error')
+//     })
+// })
     
-    // show
+
+// show
     breads.get('/:id', (req, res) => {
        
        Bread.findById(req.params.id)
@@ -67,7 +82,7 @@ breads.get("/:arrayIndex/edit", (req,res)=>{
     
 
 //update
-breads.put("/:arrayIndex", (req, res) =>{
+breads.put("/:id", (req, res) =>{
     if(req.body.hasGluten === "on"){
         req.body.hasGluten = true
     } else {
