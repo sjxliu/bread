@@ -8,12 +8,22 @@ const breadSchema = new Schema({
   // schema here
   name: {type: String, required: true},
   HasGluten: Boolean,
-  Image: {type: String, default: "https://th.bing.com/th/id/R.d09bcd9708fe2dbe4ad380d8cf0bc5ff?rik=1mGT8EGvt%2f6WCQ&pid=ImgRaw&r=0"}
+  Image: {type: String, default: "https://th.bing.com/th/id/R.d09bcd9708fe2dbe4ad380d8cf0bc5ff?rik=1mGT8EGvt%2f6WCQ&pid=ImgRaw&r=0"},
+  baker: {
+    type: String,
+    enum: ["Rachel", "Monica", "Joey", "Chandler", "Ross"]
+  }
 })
 
 
+// instance method
+breadSchema.methods.getBakedBy = function(){
+  return `${this.name} was baked with love by ${this.baker}`
+}
+
+
 //model & export
-const Bread = mongoose.model("Bread", breadSchema)
+const Bread = mongoose.model("breads", breadSchema)
 module.exports = Bread
 
 
