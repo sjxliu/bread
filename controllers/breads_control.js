@@ -1,4 +1,5 @@
 const express = require("express");
+const Baker = require("../models/baker");
 const { flat } = require("../models/bread");
 const breads = express.Router()
 const Bread = require("../models/bread")
@@ -57,6 +58,19 @@ breads.get("/:id/edit", (req,res) => {
 //     })
 // })
     
+
+//NEW
+breads.get("/new", async(req,res)=>{
+    try{
+        const foundBakers = await Baker.find()
+res.render("new", {
+    bakers: foundBakers,
+});
+    } catch(err) {
+        res.send("ERROR");
+    }
+});
+
 
 // show
     breads.get('/:id', (req, res) => {

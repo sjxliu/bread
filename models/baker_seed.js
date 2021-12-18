@@ -1,31 +1,37 @@
-// require mongoose
-const mongoose = require ("mongoose")
+module.exports = [
+  {
+    name: 'Monica',
+    startDate: '1994-09-22',
+    bio: 'Prefers napkins folded a particular way.'
+  },
+  {
+    name: 'Ross',
+    startDate: '1995-09-21',
+    bio: 'Loves dinosaurs. Is currently on a break.'
+  },
+  {
+    name: 'Joey',
+    startDate: '1996-09-19',
+    bio: 'Does NOT share food. Recommends that you read Little Women.'
+  },
+  {
+    name: 'Phoebe',
+    startDate: '1996-09-19',
+    bio: 'Fierce protector of the bakery\'s smelly cat.'
+  },
+  {
+    name: 'Chandler',
+    startDate: '1997-09-25',
+    bio: 'Thinks chewing gum is perfection. Honestly, could it BE any better?'
+  },
+  {
+    name: 'Rachel',
+    startDate: '1998-09-24',
+    bio: 'Is NOT a shoe. Occasionally a fan of lobsters.'
+  },
+]
 
-//creating shorthand for the Schema constructor
-const {Schema} = mongoose
 
-const breadSchema = new Schema({
-  // schema here
-  name: {type: String, required: true},
-  HasGluten: Boolean,
-  Image: {type: String, default: "https://th.bing.com/th/id/R.d09bcd9708fe2dbe4ad380d8cf0bc5ff?rik=1mGT8EGvt%2f6WCQ&pid=ImgRaw&r=0"},
-  
-  baker: {
-    type: Schema.Types.ObjectId,
-    ref: "Baker",
-  }
-});
-
-
-// instance method
-breadSchema.methods.getBakedBy = function(){
-  return `${this.name} was baked with love by ${this.baker}`
-}
-
-
-//model & export
-const Bread = mongoose.model("breads", breadSchema)
-module.exports = Bread
 
 
 

@@ -1,5 +1,6 @@
 // DEPENDENCIES
 const express = require('express')
+const req = require('express/lib/request')
 const methOverride = require("method-override")
 const mongoose = require("mongoose")
 
@@ -32,6 +33,13 @@ app.get('/', (req, res) => {
 //breads
 const breadsController = require('./controllers/breads_control.js')
 app.use('/breads', breadsController)
+
+// Bakers
+const bakerControl = require("./controllers/baker_controls");
+app.use("/breads", bakerControl)
+
+const breadControl = require("./controllers/breads_control");
+app.use("/bakers", breadControl)
 
 app.get("*", (req,res)=>{
     res.send("404");
