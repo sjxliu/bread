@@ -1,12 +1,11 @@
-const React = require("react")
+const React = require("react");
 
-
-function Default(html){
-    return(
-        <html>
-            <head>
-                <title>Bread Crud</title>
-                <link
+function Default(html) {
+  return (
+    <html>
+      <head>
+        <title>Bread Crud</title>
+        <link
           rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css"
           integrity="sha512-NhSC1YmyruXifcj/KFRWoC561YpHpc5Jtzgvbuzx5VozKpWvQ+4nXhPdFgmx8xqexRcpAglTj9sIBWINXa8x5w=="
@@ -19,18 +18,19 @@ function Default(html){
           crossOrigin="anonymous"
         />
         <link rel="stylesheet" href="/main.css"></link>
-
-            </head>
-            <body>
-               <div className="wrapper">
-                   <header>
-                       <h1><a href="/breads">BreadCRUD</a> </h1>
-                   </header>
-                   <div className="container">{html.children}</div>
-               </div>
-            </body>
-        </html>
-    )
+      </head>
+      <body>
+        <div className="wrapper">
+          <header>
+            <h1>
+              <a href="/breads">BreadCRUD</a>{" "}
+            </h1>
+          </header>
+          <div className="container">{html.children}</div>
+        </div>
+      </body>
+    </html>
+  );
 }
 
 module.exports = Default;
