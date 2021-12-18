@@ -13,5 +13,14 @@ baker.get("/data/seed", async (req, res)=>{
     }
 })
 
+//Index
+baker.get("/", (req, res)=>{
+    Baker.find()
+    .populate("breads")
+    .then(foundBakers =>{
+        res.send(foundBakers)
+    })
+})
+
 
 module.exports = baker;
