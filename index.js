@@ -36,14 +36,15 @@ app.use('/breads', breadsController)
 
 // Bakers
 const bakerControl = require("./controllers/baker_controls");
-app.use("/breads", bakerControl)
+app.use("/bakers", bakerControl)
 
-const breadControl = require("./controllers/breads_control");
-app.use("/bakers", breadControl)
 
+// error
 app.get("*", (req,res)=>{
     res.send("404");
 })
+
+
 //LISTEN
 app.listen(PORT, () => {
     console.log(PORT, 'has risen');

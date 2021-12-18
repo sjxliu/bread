@@ -17,10 +17,15 @@ breads.get("/", (req, res)=>{
         })
 });
 
-
-breads.get("/new", (req,res) => {
-    res.render("New")
-})
+//new
+breads.get('/new', (req, res) => {
+    Baker.find()
+      .then(foundBakers => {
+        res.render('new', {
+          bakers: foundBakers
+        })
+      })
+  } )
 
 
     breads.post("/", (req,res)=>{
@@ -38,14 +43,18 @@ breads.get("/new", (req,res) => {
 
 
     //edit put on top of show
-breads.get("/:id/edit", (req,res) => {
-    Bread.findById(req.params.id)
-    .then(foundBread =>{
-        res.render("edit", {
-            bread: foundBread
-        })
-    })
-})
+breads.get('/:id/edit', (req, res) => {
+    Baker.find()
+      .then(foundBakers => {
+          Bread.findById(req.params.id)
+            .then(foundBread => {
+              res.render('edit', {
+                  bread: foundBread, 
+                  bakers: foundBakers 
+              })
+            })
+      })
+  })
 
 // edit?
 // breads.get('/:arrayIndex/edit', (req, res)=> {
@@ -60,22 +69,23 @@ breads.get("/:id/edit", (req,res) => {
     
 
 //NEW
-breads.get("/new", async(req,res)=>{
-    try{
-        const foundBakers = await Baker.find()
-res.render("new", {
-    bakers: foundBakers,
-});
-    } catch(err) {
-        res.send("ERROR");
-    }
-});
+// breads.get("/new", async(req,res)=>{
+//     try{
+//         const foundBakers = await Baker.find()
+// res.render("new", {
+//     bakers: foundBakers,
+// });
+//     } catch(err) {
+//         res.send("ERROR");
+//     }
+// });
 
 
 // show
     breads.get('/:id', (req, res) => {
        
        Bread.findById(req.params.id)
+       .populate("baker")
        .then(foundBread => {
         const bakedBy = foundBread.getBakedBy()
         console.log(bakedBy)
