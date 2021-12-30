@@ -42,6 +42,11 @@ app.get("*", (req, res) => {
   res.send("404");
 });
 
+// Error Handler
+const errorHandler = require("./middleware/errorHandler")
+app.use(errorHandler)
+
+
 //LISTEN
 app.listen(PORT, () => {
   console.log(PORT, "has risen");

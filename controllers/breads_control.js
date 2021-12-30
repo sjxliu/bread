@@ -4,17 +4,16 @@ const Baker = require("../models/baker");
 const breads = express.Router();
 const Bread = require("../models/bread");
 const breadSeedData = require("../models/baker_seed.js");
+const errorHandler = require("../middleware/errorHandler");
 
 //Index
-breads.get("/", (req, res) => {
-  Baker.find().then((foundBakers) => {
-    Bread.find().then((foundBreads) => {
-      res.render("index", {
-        breads: foundBreads,
-        bakers: foundBakers,
-        title: "Index Page",
-      });
-    });
+breads.get("/", async (req, res) => {
+  const foundBakers = await Baker.find().lean();
+  const foundBreads = await Bread.find().limit(2).lean();
+  res.render("index", {
+    breads: foundBreads,
+    bakers: foundBakers,
+    title: "Index Page",
   });
 });
 
@@ -76,7 +75,7 @@ breads.get("/:id/edit", (req, res) => {
 // });
 
 // show
-breads.get("/:id", (req, res) => {
+breads.get("/:id", (req, res, next) => {
   Bread.findById(req.params.id)
     .populate("baker")
     .then((foundBread) => {
@@ -87,7 +86,7 @@ breads.get("/:id", (req, res) => {
       });
     })
     .catch((err) => {
-      res.send("error404");
+      next(err);
     });
 });
 
