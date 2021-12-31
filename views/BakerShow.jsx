@@ -6,16 +6,15 @@ function Show({ baker }) {
     <Default>
       <h3>{baker.name}</h3>
       <p>
-        {baker.name} has been baking with use since{" "}
-        {baker.startDate.getFullYear()}
+        {`${baker.name} has been baking with use since ${baker.startDate.getFullYear()}`}
       </p>
       <p>
         About {baker.name}: {baker.bio}
       </p>
       <h3>Breads {baker.name} has baked</h3>
       <ul>
-        {baker.breads.map((bread) => {
-          return <li key={bread.id}>{bread.name}</li>;
+        {baker.breads.map(bread => {
+         <li key={bread.id}>{bread.name}</li>;
         })}
       </ul>
       <form action={`/bakers/${baker.id}?_method=DELETE`} method="POST">

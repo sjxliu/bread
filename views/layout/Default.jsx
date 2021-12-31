@@ -23,7 +23,7 @@ function Default(html) {
         <div className="wrapper">
           <header>
             <h1>
-              <a href="/breads">BreadCRUD</a>{" "}
+              <a href="/breads">BreadCRUD</a>
             </h1>
           </header>
           <div className="container">{html.children}</div>

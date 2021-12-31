@@ -13,13 +13,14 @@ function New({ bakers }) {
         <input type="text" name="image" id="image"></input>
 
         <label htmlFor="baker">Baker</label>
-        <select name="baker" id="baker">
+        <select name="baker" id="baker" required>
+          <option value="" disabled>
+            Select Baker
+          </option>
           {bakers.map((baker) => {
-            return (
               <option value={baker.id} key={baker.id}>
                 {baker.name}
               </option>
-            );
           })}
         </select>
 

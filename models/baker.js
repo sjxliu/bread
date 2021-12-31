@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 const Bread = require("./bread");
 
+
+//schema
 const bakerSchema = new Schema(
   {
     name: {
@@ -9,7 +11,10 @@ const bakerSchema = new Schema(
       required: true,
       enum: ["Rachel", "Monica", "Joey", "Chandler", "Ross", "Phoebe"],
     },
-    startDate: { type: Date, required: true },
+    startDate: { 
+      type: Date, 
+      required: true,
+  },
     bio: String,
 
     // by default, virtuals do not show up on JSON data. We must specify on our schema that we want them
@@ -17,20 +22,22 @@ const bakerSchema = new Schema(
   { toJSON: { virtuals: true } }
 );
 
+
 //Virtuals
 bakerSchema.virtual("breads", {
-  ref: "breads",
+  ref: "Bread",
   localField: "_id",
   foreignField: "baker",
 });
 
 
 // Hooks
-bakerSchema.post("findOneAndDelete", function () {
-  console.log(this);
-  Bread.deleteMany({ baker: this._conditions._conditions }).then(
-    (deletedStatus) => console.log(deletedStatus)
-  );
+bakerSchema.post("findOneAndDelete", async () => {
+ try{
+  await Bread.deleteMany({ baker: this._conditions._id });
+ } catch (err) {
+   throw err;
+ }
 });
 
 const Baker = mongoose.model("Baker", bakerSchema);

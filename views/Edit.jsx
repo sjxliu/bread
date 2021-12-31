@@ -7,6 +7,7 @@ function Edit({ bread, bakers }) {
       <h2>Edit a Bread</h2>
       <form action={`/breads/${bread.id}?_method=PUT`} method="POST">
         <label htmlFor="name">Name</label>
+
         <input
           type="text"
           name="name"
@@ -14,7 +15,9 @@ function Edit({ bread, bakers }) {
           required
           defaultValue={bread.name}
         ></input>
+
         <label htmlFor="image">Image</label>
+
         <input
           type="text"
           name="image"
@@ -23,13 +26,12 @@ function Edit({ bread, bakers }) {
         ></input>
 
         <label htmlFor="baker">Baker</label>
+
         <select name="baker" id="baker" defaultValue={bread.baker}>
           {bakers.map((baker) => {
-            return (
-              <option value={baker.id} key={baker.id}>
-                {baker.name}
-              </option>
-            );
+            <option value={baker.id} key={baker.id}>
+              {baker.name}
+            </option>;
           })}
         </select>
 
@@ -38,8 +40,11 @@ function Edit({ bread, bakers }) {
           type="checkbox"
           name="hasGluten"
           id="hasGluten"
-          defaultValue={bread.hasGluten}
+          defaultChecked={bread.hasGluten}
         ></input>
+
+        <br/>
+        <input type="submit"></input>
       </form>
     </Default>
   );
