@@ -1,29 +1,33 @@
 const express = require("express");
-const Baker = require("../models/baker");
-// const { flat } = require("../models/bread");
 const breads = express.Router();
+const Baker = require("../models/baker");
 const Bread = require("../models/bread");
-const breadSeedData = require("../models/baker_seed.js");
-const errorHandler = require("../middleware/errorHandler");
 
 //Index
 breads.get("/", async (req, res) => {
-  const foundBakers = await Baker.find().lean();
-  const foundBreads = await Bread.find().limit(2).lean();
-  res.render("index", {
-    breads: foundBreads,
-    bakers: foundBakers,
-    title: "Index Page",
-  });
+  try {
+    const foundBakers = await Baker.find().lean();
+    const foundBreads = await Bread.find().limit(2).lean();
+    res.render("index", {
+      breads: foundBreads,
+      bakers: foundBakers,
+      title: "Index Page",
+    });
+  } catch (err) {
+    next(err);
+  }
 });
 
 //new
-breads.get("/new", (req, res) => {
-  Baker.find().then((foundBakers) => {
+breads.get("/new", async (_req, res, next) => {
+  try {
+    const foundBakers = await Baker.find();
     res.render("new", {
       bakers: foundBakers,
     });
-  });
+  } catch (err) {
+    next(err);
+  }
 });
 
 breads.post("/", (req, res) => {
@@ -52,15 +56,19 @@ breads.get("/:id/edit", (req, res) => {
 });
 
 // edit?
-// breads.get('/:arrayIndex/edit', (req, res)=> {
-//     breadType.findById(req.params.arrayIndex).then(bread => {
-//         res.render('Edit', {bread: bread,
-//             index: req.params.arrayIndex})
-//     })
-//     .catch(err => {
-//         res.status(404).render('Error')
-//     })
-// })
+
+breads.get("/:id/edit", async (req, res, next) => {
+  try {
+    const foundBakers = await Baker.find();
+    const foundBread = await Bread.findById(req.params.id);
+    res.render("edit", {
+      bread: foundBread,
+      bakers: foundBakers,
+    });
+  } catch (err) {
+    next(err);
+  }
+});
 
 //NEW
 // breads.get("/new", async(req,res)=>{
@@ -75,29 +83,15 @@ breads.get("/:id/edit", (req, res) => {
 // });
 
 // show
-breads.get("/:id", (req, res, next) => {
-  Bread.findById(req.params.id)
-    .populate("baker")
-    .then((foundBread) => {
-      const bakedBy = foundBread.getBakedBy();
-      console.log(bakedBy);
-      res.render("show", {
-        bread: foundBread,
-      });
-    })
-    .catch((err) => {
-      next(err);
+breads.get("/:id", async (req, res, next) => {
+  try {
+    const foundBread = await Bread.findById(req.params.id).populate("baker");
+    res.render("show", {
+      bread: foundBread,
     });
-});
-
-breads.get("/:id", (req, res) => {
-  Baker.findById(req.params.id)
-    .populate("breads")
-    .then((foundBaker) => {
-      res.render("bakerShow", {
-        baker: foundBaker,
-      });
-    });
+  } catch (err) {
+    next(err);
+  }
 });
 
 //update
